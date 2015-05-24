@@ -1,0 +1,26 @@
+class Stacks<T> {
+    var lists:[T]
+    
+    init(){
+        lists = [T]()
+    }
+    func push(item:T){
+        lists.append(item)
+    }
+    
+    func pop()-> T{
+        return lists.removeLast()
+    }
+    
+    func isEmpty()->Bool{
+        return lists.count == 0
+    }
+}
+
+var browsingHistory = Stacks<String>()
+browsingHistory.push("apple.com")
+browsingHistory.push("goal.com")
+browsingHistory.pop()
+browsingHistory.isEmpty()
+browsingHistory.pop()
+browsingHistory.isEmpty()
