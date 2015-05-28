@@ -1,0 +1,134 @@
+instead of writing the sequlae to our stack code as queue, I took a detour to write on LinkedList as it forms a bedrock for other data structures and algorithms needed in the further topics. my bad if this code was heavily commented as I try to make it very explicit and easy to understand every line so that subsequent topics will be easily understood. Happy coding. Is also on my github account
+
+
+
+import UIKit
+
+
+// create a node type(class) that has a value and pointer to the next node object
+// the class is a generic class, which explains the use of T inside the chevron
+// also the Node class extends the equatable protocol needed to use the equal (==)
+// and not equal(!=) operators to test for equality with user define types
+
+
+class Node<T: Equatable> {
+    // both variables are optionals because they are not going to be initialized in this class and swift doesnt allow nil values except optionals
+    var value: T? = nil
+    var nextNode: Node? = nil
+}
+
+class LinkedList<T: Equatable> {
+    
+    // create an instance of Node. will omit comment on generic type involvement
+    // our node instance will act as a container for storing our info instead of 
+    // creating new Node objects for every value that needs to be stored
+    
+    var head = Node<T>()
+    
+    // create a function to insert new value
+    
+    func insertValue(value: T){
+        
+        // check if the list is empty ie nil, then insert or assign the value
+        // to the head(first node)
+        
+        if self.head.value == nil {
+            self.head.value = value
+            
+        }else {
+            
+            // if the list is not empty and since the last node in a linked list 
+            // always points to null, find the last node by 
+            // finding the node that points to nil ie == nil
+            
+            var lastNode = self.head
+            
+            while lastNode.nextNode != nil {
+                
+                // keep advancing the last node to point to nextnode property
+                
+                lastNode = lastNode.nextNode!
+                
+            }  // exit the while loop once the last node is found
+            
+            // create a new node and add it after the last node
+            // there by making it the new last node
+            
+            var newNode = Node<T>()
+            newNode.value = value
+            lastNode.nextNode = newNode
+            
+        }
+    } // end of insert function
+    
+    // create a delete function that deletes an entire node(both its value and 
+    // pointer to next Node
+    
+    func delete(value: T){
+        
+        // check if the value is in the head
+        
+        if self.head.value == value {
+            
+            // implicitly head.next is pointing to null or next node
+            // reassigning head to the node pointed by head.next deletes head from 
+            // chain.
+            
+            self.head = self.head.nextNode!
+            
+        }  // end of if statement
+        
+        // if the node or value is not in the head
+        // then travers the entire list to check if the node is there, if is not,
+        // throw an error or exception(NB the CODE FOR EXCEPTION HANDLING WAS 
+        // OMMITTED
+        
+        if self.head.value != nil {
+            
+            var frontNode = self.head
+            var previousNode = Node<T>()
+            
+            // advcance the frontNode till it reaches or become the node or 
+            // value to be deleted
+            
+            while frontNode.value != value && frontNode.nextNode != nil {
+                
+                // test frontNode.next to avoid infinite loop if the value is 
+                // not there
+                
+                previousNode = frontNode
+                frontNode = frontNode.nextNode!
+                
+            } // end of while loop
+            
+            // if node to be deleted is found in the chain
+            // connect the previous node next pointer to the front(current)
+            // node next pointer
+            
+            if frontNode.value == value {
+                
+                if previousNode.nextNode != nil {
+                    
+                    previousNode.nextNode = frontNode.nextNode
+                    
+                } else {
+                    
+                    // the front node next pointer is the end ie it points
+                    // to null, so set the previous node pointer to point to null
+                    previousNode.nextNode = nil
+                }
+            }
+        }
+        
+    } // end of delete function
+    
+    // create a print function to text our code and traverse the list
+    // and a count computed prpoerty
+
+}
+
+var movielists = LinkedList<String>()
+movielists.insertValue("shattered")
+movielists.insertValue("troy")
+movielists.insertValue("gift hands")
+movielists.delete("shattered")
