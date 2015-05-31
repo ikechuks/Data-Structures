@@ -1,0 +1,67 @@
+//: Playground - noun: a place where people can play
+
+import UIKit
+
+var str = "Hello, playground"
+class Node<T: Equatable> {
+    var queuedNodeValue: T? = nil
+    var nextQueuedNode: Node? = nil
+}
+
+class LinkedQueued<T: Equatable> {
+    var length = 0
+    var head = Node<T>()
+    var tail = Node<T>()
+    
+    // create a function to check if the queue or container is empty
+    // returns a boolean value
+    func isEmpty()-> Bool {
+        return self.length == 0
+    } // end of is empty function
+    
+    
+    func enqueue(value: T){
+        
+        var newNode = Node<T>()
+        newNode.queuedNodeValue = value
+        
+        if self.head.queuedNodeValue == nil {
+            
+            self.head = newNode
+            self.tail = newNode
+            
+        }else{
+            
+            // if is not empty, set the last node pointer to the new node
+            // then make the new node the last node
+            tail.nextQueuedNode = newNode
+            self.tail = newNode
+        
+        }
+            self.length = self.length + 1
+        
+    } // end of enqueue function
+    
+    func dequeue()-> T?{
+        
+        // get the value of the front element to be removed
+        var removedValue = self.head.queuedNodeValue
+        // reset the head to be the value of the nextNode there by automatically
+        // removing the initial head from the chain
+        self.head = self.head.nextQueuedNode!
+        self.length = self.length - 1
+        return removedValue
+
+    }
+}
+
+
+
+var msgs = LinkedQueued<String>()
+msgs.enqueue("hi dear")
+msgs.enqueue("sweet I will be working late tonight")
+msgs.enqueue("Am done dear")
+msgs.enqueue("sweet are you back from work")
+msgs.dequeue()
+msgs.dequeue()
+
