@@ -1,0 +1,85 @@
+class StackNode<T:Equatable>{
+    var data: T?
+    var nextNode: StackNode?
+    init(){
+        self.data = nil
+        self.nextNode = nil
+    }
+    
+    func setData(data:T){
+        self.data = data
+    }
+    
+    func getData()-> T{
+        return self.data!
+    }
+    
+    func setNextNode(nextNode: StackNode){
+        self.nextNode = nextNode
+    }
+    
+    func getNextNode()-> StackNode{
+        return self.nextNode!
+    }
+    
+    func hasNextNode()-> Bool {
+        return (self.nextNode != nil)
+    }
+}
+
+
+class Stack<T:Equatable> {
+    var head: StackNode<T>?
+    var size: Int = 0
+    init(){
+        self.head = StackNode<T>()
+        self.size = 0
+    }
+    
+    func push(data: T){
+        var tempNode = StackNode<T>()
+        tempNode.setData(data)
+        tempNode.setNextNode(self.head!)
+        self.head = tempNode
+        self.size++
+    }
+    
+    func isEmpty()-> Bool{
+        return (self.size <= 0)
+    }
+
+    
+    func pop()-> T{
+//        if self.head == nil{
+//            return ""
+//        }
+        var poppedData = self.head!.getData()
+        self.head = self.head!.getNextNode()
+        self.size--
+        return poppedData
+    }
+    
+    func peek()-> T{
+        if self.isEmpty(){
+          //return "empty stack or stack underflow"
+        }
+        
+         return self.head!.getData()
+    }
+}
+
+var list = Stack<String>()
+list.isEmpty()
+list.push("web pages")
+list.push("glo")
+list.isEmpty()
+println("\(list.pop())")
+list.size
+list.peek()
+var wages = Stack<Int>()
+wages.isEmpty()
+wages.push(21)
+wages.push(200)
+wages.peek()
+wages.pop()
+wages.isEmpty()
