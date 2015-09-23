@@ -1,0 +1,71 @@
+class QueueNode<T: Equatable>{
+    var data:T?
+    var nextQNode:QueueNode?
+    
+    func setNode(data:T){
+        self.data = data
+    }
+    
+    func getData()-> T{
+        return self.data!
+    }
+    
+    func setNextQNode(nextNode: QueueNode){
+        self.nextQNode = nextNode
+    }
+    
+    func getNextQNode()-> QueueNode?{
+        return self.nextQNode
+    }
+    
+    func hasNextNode()-> Bool{
+        return self.nextQNode != nil
+    }
+}
+
+class LinkedQueue<T: Equatable> {
+    var head: QueueNode<T>?
+    var tail: QueueNode<T>?
+    var size: Int = 0
+    init(){
+        self.head = nil
+        self.tail = nil
+        self.size = 0
+    }
+    
+    func enqueue(value:T){
+        var newNode = QueueNode<T>()
+            newNode.setNode(value)
+            newNode.nextQNode = nil
+        if self.head == nil{
+            self.head = newNode
+            self.tail = newNode
+        }
+        var tail = self.tail
+        tail?.nextQNode = newNode
+        self.size++
+    }
+    
+    func isEmpty()-> Bool{
+        return self.size <= 0
+    }
+    
+    func dequeue()-> T{
+        var dequeuedValue = self.head!.getData()
+        self.head = self.head?.getNextQNode()
+        self.size--
+        if self.size == 0 {
+            self.tail = nil
+        }
+        return dequeuedValue
+    }
+}
+var deposits = LinkedQueue<Int>()
+deposits.isEmpty()
+deposits.enqueue(32)
+deposits.enqueue(12)
+deposits.size
+deposits.isEmpty()
+deposits.dequeue()
+deposits.size
+deposits.dequeue()
